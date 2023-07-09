@@ -1,0 +1,129 @@
+<html>
+<head>
+  <title>Calculator</title>
+  <style>
+    body {
+      background-color: lavender;
+    }
+    
+    #calculator {
+      width: 230px;
+      background-color: teal;
+      padding: 10px;
+      margin: 20px auto;
+      border-radius: 5px;
+      color: white;
+      text-align: center;
+    }
+    
+    #calculator input[type="text"] {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 5px;
+    }
+    
+    #calculator table {
+      margin: 0 auto;
+    }
+    
+    #calculator table td {
+      padding: 5px;
+    }
+    
+    #calculator table td input[type="button"] {
+      width: 45px;
+      height: 30px;
+    }
+    
+    #calculator #error {
+      color: red;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+  </style>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+</head>
+<body>
+  <div id="calculator">
+    <input type="text" id="result" disabled><br>
+    <table>
+      <tr>
+        <td><input type="button" value="7" onclick="appendToResult('7')"></td>
+        <td><input type="button" value="8" onclick="appendToResult('8')"></td>
+        <td><input type="button" value="9" onclick="appendToResult('9')"></td>
+        <td><input type="button" value="+" onclick="appendToResult('+')"></td>
+      </tr>
+      <tr>
+        <td><input type="button" value="4" onclick="appendToResult('4')"></td>
+        <td><input type="button" value="5" onclick="appendToResult('5')"></td>
+        <td><input type="button" value="6" onclick="appendToResult('6')"></td>
+        <td><input type="button" value="-" onclick="appendToResult('-')"></td>
+      </tr>
+      <tr>
+        <td><input type="button" value="1" onclick="appendToResult('1')"></td>
+        <td><input type="button" value="2" onclick="appendToResult('2')"></td>
+        <td><input type="button" value="3" onclick="appendToResult('3')"></td>
+        <td><input type="button" value="*" onclick="appendToResult('*')"></td>
+      </tr>
+      <tr>
+        <td><input type="button" value="0" onclick="appendToResult('0')"></td>
+        <td><input type="button" value="." onclick="appendToResult('.')"></td>
+        <td><input type="button" value="(" onclick="appendToResult('(')"></td>
+        <td><input type="button" value="/" onclick="appendToResult('/')"></td>
+      </tr>
+      <tr>
+        <td><input type="button" value=")" onclick="appendToResult(')')"></td>
+        <td><input type="button" value="^" onclick="appendToResult('^')"></td>
+        <td><input type="button" value="Clear" onclick="clearResult()"></td>
+        <td><input type="button" value="=" onclick="calculateResult()"></td>
+      </tr>
+    </table>
+    <div id="error"></div>
+    <input type="button" value="Show Previous Entries" onclick="showPreviousEntries()">
+    <br/><br/>
+    <input type="button" value="Clear Previous Entries" onclick="clearPreviousEntries()">
+  </div>
+
+  <script>
+    let entries = [];
+    let resultElement = document.getElementById('result');
+    let errorElement = document.getElementById('error');
+
+    function appendToResult(value) {
+      resultElement.value += value;
+    }
+
+    function clearResult() {
+      resultElement.value = '';
+      errorElement.textContent = '';
+    }
+
+    function calculateResult() {
+      try {
+        const result = eval(resultElement.value);
+        if (isNaN(result)) {
+          errorElement.textContent = 'Error: Invalid input';
+        } else {
+          entries.push(resultElement.value);
+          resultElement.value = result;
+        }
+      } catch (error) {
+        errorElement.textContent = 'Error: Invalid input';
+      }
+    }
+
+        function clearLastInput() {
+            const input = document.getElementById('input');
+            input.value = input.value.slice(0, -1);
+        }
+
+    function showPreviousEntries() {
+      alert('Previous Entries:\n' + entries.join('\n'));
+    }
+
+    function clearPreviousEntries() {
+     window.location.reload(); 
+    }
+  </script>
+</body>
+</html>
